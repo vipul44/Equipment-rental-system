@@ -1,0 +1,333 @@
+/* ================================================================
+   FRS Admin – Pricing Control Panel + Orders
+   ================================================================ */
+
+/* ── General ──────────────────────────────────────────────────── */
+body { background:#f0f0f1; }
+.frs-wrap * { box-sizing:border-box; }
+.frs-wrap h1 { display:flex;align-items:center;gap:10px;margin-bottom:4px; }
+.frs-badge  { display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;padding:0 7px;background:#2271b1;color:#fff;font-size:11px;font-weight:700;border-radius:11px; }
+
+/* ── Pricing page wrapper ─────────────────────────────────────── */
+.frs-pricing-page { max-width:1380px;padding-bottom:40px; }
+
+/* Top bar */
+.frs-topbar {
+    display:flex;align-items:center;justify-content:space-between;
+    background:#fff;border:1px solid #e0e0e0;border-radius:6px;
+    padding:16px 22px;margin-bottom:20px;
+    box-shadow:0 1px 3px rgba(0,0,0,.05);
+}
+.frs-topbar-left h1  { font-size:21px;font-weight:700;color:#1d2327;margin:0 0 2px; }
+.frs-topbar-left p   { font-size:13px;color:#777;margin:0; }
+.frs-btn-save {
+    background:#2271b1;color:#fff;border:none;border-radius:4px;
+    padding:9px 22px;font-size:13px;font-weight:600;cursor:pointer;
+    white-space:nowrap;transition:background .15s;
+}
+.frs-btn-save:hover { background:#135e96; }
+.frs-btn-save:disabled { opacity:.6;cursor:not-allowed; }
+
+/* Save feedback */
+.frs-save-msg { font-size:13px;font-weight:600;margin-left:12px; }
+
+/* ── Grid layout ──────────────────────────────────────────────── */
+.frs-grid       { display:flex;flex-direction:column;gap:18px; }
+.frs-grid-half  { display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start; }
+.frs-grid-full  { display:block; }
+.frs-grid-half2 { display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start; }
+
+/* ── Card ─────────────────────────────────────────────────────── */
+.frs-card {
+    background:#fff;border:1px solid #e2e2e2;border-radius:8px;
+    box-shadow:0 1px 4px rgba(0,0,0,.06);overflow:hidden;
+}
+.frs-card-head {
+    display:flex;align-items:center;gap:12px;
+    padding:14px 20px;border-bottom:1px solid #ececec;
+}
+.frs-card-head-blue   { background:#f5f9ff; }
+.frs-card-head-amber  { background:#fffbf0; }
+.frs-card-head-teal   { background:#f0fbfa; }
+.frs-card-head-violet { background:#f8f4ff; }
+.frs-card-head-slate  { background:#f4f5f6; }
+
+.frs-icon {
+    width:36px;height:36px;border-radius:8px;flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;font-size:17px;
+}
+.frs-icon-blue   { background:#2271b1;color:#fff; }
+.frs-icon-amber  { background:#d97706;color:#fff; }
+.frs-icon-teal   { background:#0d9488;color:#fff; }
+.frs-icon-violet { background:#7c3aed;color:#fff; }
+.frs-icon-slate  { background:#475569;color:#fff; }
+
+.frs-card-head-info        { flex:1;min-width:0; }
+.frs-card-head-info h2     { font-size:14px;font-weight:700;color:#1d2327;margin:0 0 1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+.frs-card-head-info p      { font-size:12px;color:#888;margin:0; }
+.frs-card-head-actions     { margin-left:auto;display:flex;align-items:center;gap:8px;flex-shrink:0; }
+
+/* Edit / Done button */
+.frs-btn-edit {
+    padding:5px 14px;font-size:12px;font-weight:600;border-radius:4px;cursor:pointer;
+    border:1px solid #c3c4c7;background:#fff;color:#50575e;transition:all .15s;
+}
+.frs-btn-edit:hover { border-color:#2271b1;color:#2271b1; }
+.frs-btn-edit.active { background:#2271b1;color:#fff;border-color:#2271b1; }
+
+/* ── Table ────────────────────────────────────────────────────── */
+.frs-card-body { overflow-x:auto; }
+.frs-table { width:100%;border-collapse:collapse;font-size:13px; }
+.frs-table thead th {
+    background:#f8f9fa;padding:10px 16px;text-align:left;
+    font-size:11.5px;font-weight:700;color:#50575e;text-transform:uppercase;
+    letter-spacing:.04em;border-bottom:2px solid #e8e8e8;white-space:nowrap;
+}
+.frs-table tbody td {
+    padding:10px 16px;border-bottom:1px solid #f3f3f3;
+    vertical-align:middle;color:#1d2327;
+}
+.frs-table tbody tr:last-child td { border-bottom:none; }
+.frs-table tbody tr:hover td { background:#fafbfc; }
+
+/* Group header row */
+.frs-group-hdr td {
+    background:#f0f4f8 !important;padding:8px 16px;
+    font-size:12px;font-weight:700;color:#374151;
+    border-bottom:1px solid #e2e2e2;letter-spacing:.02em;
+}
+
+/* ── Price input ($ box + number) ────────────────────────────── */
+.frs-pi { display:inline-flex;align-items:stretch;height:32px; }
+.frs-pi-sym {
+    display:flex;align-items:center;justify-content:center;
+    width:28px;background:#f0f0f0;border:1px solid #ddd;border-right:none;
+    border-radius:4px 0 0 4px;font-size:13px;font-weight:600;color:#555;
+}
+.frs-pi input {
+    width:84px;padding:0 8px;border:1px solid #ddd;border-radius:0 4px 4px 0;
+    font-size:13px;color:#1d2327;-moz-appearance:textfield;background:#fff;
+}
+.frs-pi input::-webkit-outer-spin-button,
+.frs-pi input::-webkit-inner-spin-button { -webkit-appearance:none; }
+.frs-pi input:focus { border-color:#2271b1;outline:none;z-index:1;position:relative; }
+
+/* Text inputs inside table */
+.frs-table input[type="text"] {
+    padding:5px 8px;border:1px solid #ddd;border-radius:4px;
+    font-size:13px;color:#1d2327;background:#fff;
+}
+.frs-table input[type="text"]:focus { border-color:#2271b1;outline:none; }
+.frs-table input[type="checkbox"] { width:16px;height:16px;accent-color:#2271b1;cursor:pointer; }
+
+/* ── Edit-only cells (hidden until card is in edit mode) ─────── */
+.frs-edit-cell { display:none; }
+.frs-card.in-edit .frs-edit-cell { display:table-cell; }
+.frs-card.in-edit tfoot.frs-add-foot { display:table-footer-group; }
+tfoot.frs-add-foot { display:none; }
+
+/* View / edit text switching */
+.frs-em { display:none; }
+.frs-card.in-edit .frs-em  { display:inline-block; }
+.frs-card.in-edit .frs-vm  { display:none; }
+
+/* Remove row button */
+.frs-btn-remove-row {
+    padding:4px 10px;font-size:11px;border-radius:4px;cursor:pointer;
+    color:#b91c1c;border:1px solid #fca5a5;background:#fff5f5;
+}
+.frs-btn-remove-row:hover { background:#fee2e2; }
+
+/* Add row footer */
+.frs-add-row-td { padding:10px 16px;border-top:2px dashed #e0e4e8; }
+.frs-btn-add-row {
+    padding:5px 14px;font-size:12px;border-radius:4px;cursor:pointer;
+    color:#2271b1;border:1px solid #93c5fd;background:#eff6ff;font-weight:600;
+}
+.frs-btn-add-row:hover { background:#dbeafe; }
+
+/* ── Image cell ───────────────────────────────────────────────── */
+.frs-img-cell { display:flex;align-items:center;gap:6px;flex-wrap:wrap; }
+.frs-img-thumb {
+    width:48px;height:36px;object-fit:cover;border-radius:4px;
+    border:1px solid #ddd;display:block;flex-shrink:0;
+}
+.frs-img-ph {
+    width:48px;height:36px;border:1.5px dashed #cbd5e1;border-radius:4px;
+    display:flex;align-items:center;justify-content:center;
+    background:#f8fafc;color:#94a3b8;font-size:18px;cursor:pointer;flex-shrink:0;
+}
+.frs-img-ph:hover { border-color:#2271b1;color:#2271b1;background:#eff6ff; }
+.frs-btn-img-upload {
+    padding:3px 10px;font-size:11px;border-radius:4px;cursor:pointer;
+    color:#2271b1;border:1px solid #93c5fd;background:#fff;font-weight:600;
+}
+.frs-btn-img-upload:hover { background:#eff6ff; }
+.frs-btn-img-remove {
+    padding:3px 8px;font-size:11px;border-radius:4px;cursor:pointer;
+    color:#b91c1c;border:1px solid #fca5a5;background:#fff;
+}
+.frs-btn-img-remove:hover { background:#fee2e2; }
+
+/* ── Deposit card body ────────────────────────────────────────── */
+.frs-deposit-body { padding:20px; }
+.frs-deposit-label { font-size:13px;font-weight:700;color:#1d2327;display:block;margin-bottom:10px; }
+.frs-deposit-hint  {
+    display:block;margin-top:10px;padding:9px 13px;
+    background:#eff6ff;border:1px solid #bfdbfe;border-radius:4px;
+    font-size:12px;color:#1d4ed8;
+}
+.frs-deposit-body .frs-pi input { width:140px;font-size:15px;height:36px; }
+.frs-deposit-body .frs-pi-sym  { width:32px;height:36px;font-size:15px; }
+
+/* ── Save footer ──────────────────────────────────────────────── */
+.frs-footer { display:flex;align-items:center;gap:14px;padding:16px 0 4px; }
+
+/* ── Orders page ──────────────────────────────────────────────── */
+.frs-search-bar { margin:14px 0 10px; }
+.frs-search-bar form { display:flex;align-items:center;gap:8px; }
+.frs-search-wrap { position:relative;flex:1;max-width:480px; }
+.frs-search-wrap input[type="text"] { width:100%;padding:8px 30px 8px 30px;border:1px solid #ddd;border-radius:4px;font-size:14px;box-sizing:border-box; }
+.frs-search-wrap input:focus { border-color:#2271b1;outline:none; }
+.frs-search-ico  { position:absolute;left:9px;top:50%;transform:translateY(-50%);color:#999;pointer-events:none; }
+.frs-search-clr  { position:absolute;right:9px;top:50%;transform:translateY(-50%);font-size:18px;color:#999;text-decoration:none;line-height:1; }
+.frs-search-info { margin:6px 0 0;font-size:13px;color:#555; }
+.frs-no-results  { background:#f9f9f9;border:1px solid #ddd;border-radius:4px;padding:24px;text-align:center;color:#666;margin-top:10px; }
+.frs-orders-table th { background:#f0f0f0; }
+.frs-chk-col { width:36px !important; }
+.frs-status { display:inline-block;padding:2px 10px;border-radius:10px;font-size:11px;font-weight:700;text-transform:uppercase; }
+.frs-status-confirmed { background:#d1fae5;color:#065f46; }
+.frs-status-pending   { background:#fef3c7;color:#92400e; }
+.frs-status-cancelled { background:#fee2e2;color:#991b1b; }
+.frs-bulk-bar { display:flex;align-items:center;gap:12px;background:#fefce8;border:1px solid #fde047;border-radius:4px;padding:10px 16px;margin-bottom:10px;font-size:13px; }
+.frs-bulk-bar span { font-weight:700;color:#713f12; }
+.frs-btn-bulk-del { color:#b91c1c !important;border-color:#fca5a5 !important;font-weight:600 !important; }
+.frs-btn-bulk-del:hover { background:#fee2e2 !important; }
+.frs-bulk-cancel { margin-left:auto; }
+.frs-btn-del-row { color:#b91c1c !important;border:none !important;background:none !important;cursor:pointer;font-size:12px;padding:3px 8px !important;border-radius:4px; }
+.frs-btn-del-row:hover { background:#fee2e2 !important; }
+tr.frs-row-sel { background:#fefce8 !important; }
+.frs-order-grid { display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px; }
+.frs-od-card { background:#fff;border:1px solid #ddd;border-radius:6px;padding:16px; }
+.frs-od-card h2 { margin:0 0 10px;font-size:14px;border-bottom:1px solid #eee;padding-bottom:8px; }
+.frs-od-table { width:100%;border-collapse:collapse; }
+.frs-od-table th { text-align:left;padding:6px 8px;background:#f9f9f9;width:42%;font-weight:600;font-size:12px;border:1px solid #eee; }
+.frs-od-table td { padding:6px 8px;font-size:13px;border:1px solid #eee; }
+.frs-sig-img { max-width:280px;border:1px solid #ddd; }
+
+/* ================================================================
+   EDIT MODE — polished inline editing
+   ================================================================ */
+
+/* Default: edit-only cells and inputs are hidden */
+.frs-edit-cell { display:none !important; }
+tfoot.frs-add-foot { display:none; }
+.frs-em { display:none !important; }
+
+/* When card has in-edit class — reveal everything */
+.frs-card.in-edit .frs-edit-cell {
+    display:table-cell !important;
+    background:#fafbff;
+    border-left:1px dashed #c7d2fe;
+}
+.frs-card.in-edit tfoot.frs-add-foot {
+    display:table-footer-group !important;
+}
+.frs-card.in-edit .frs-em {
+    display:inline-block !important;
+    margin:0;
+}
+.frs-card.in-edit .frs-vm {
+    display:none !important;
+}
+
+/* Edit mode card gets a subtle blue outline to show it's active */
+.frs-card.in-edit {
+    outline:2px solid #93c5fd;
+    outline-offset:-1px;
+}
+.frs-card.in-edit .frs-card-head {
+    border-bottom:2px solid #93c5fd;
+}
+
+/* Edit banner inside card header when editing */
+.frs-card.in-edit .frs-btn-edit {
+    background:#2271b1 !important;
+    color:#fff !important;
+    border-color:#2271b1 !important;
+}
+
+/* All price inputs always editable (not edit-mode only) */
+.frs-pi input[type="number"] {
+    background:#fff;
+    border:1px solid #d1d5db;
+}
+.frs-pi input[type="number"]:hover {
+    border-color:#6b7280;
+}
+
+/* Image cell in edit mode */
+.frs-card.in-edit .frs-img-cell {
+    display:flex;
+    align-items:center;
+    gap:6px;
+    flex-wrap:nowrap;
+}
+
+/* Capacity text input in edit mode */
+.frs-card.in-edit .frs-cap-lbl,
+.frs-card.in-edit input.frs-em[type="text"] {
+    border:1px solid #d1d5db;
+    border-radius:4px;
+    padding:5px 8px;
+    font-size:13px;
+    background:#fff;
+    display:inline-block !important;
+}
+.frs-card.in-edit .frs-cap-lbl:focus,
+.frs-card.in-edit input.frs-em[type="text"]:focus {
+    border-color:#2271b1;
+    outline:none;
+    box-shadow:0 0 0 2px rgba(34,113,177,.15);
+}
+
+/* Remove row button shown only in edit mode */
+.frs-btn-remove-row {
+    display:inline-flex;
+    align-items:center;
+    gap:4px;
+    white-space:nowrap;
+}
+
+/* Add row footer styling */
+.frs-card.in-edit tfoot.frs-add-foot td {
+    padding:12px 16px;
+    background:#f0f7ff;
+    border-top:2px dashed #bfdbfe;
+}
+
+/* Table header for edit columns */
+.frs-card.in-edit thead th:last-child,
+.frs-card.in-edit thead .frs-edit-cell {
+    background:#eef3ff;
+    color:#3b5bdb;
+    font-size:11px;
+}
+
+/* Smooth transition when entering/leaving edit mode */
+.frs-card {
+    transition:outline .15s ease;
+}
+
+/* ── Add-on row specific ──────────────────────────────────────── */
+.frs-btn-remove-addon {
+    padding:4px 10px;font-size:11px;border-radius:4px;cursor:pointer;
+    color:#b91c1c;border:1px solid #fca5a5;background:#fff5f5;white-space:nowrap;
+}
+.frs-btn-remove-addon:hover { background:#fee2e2; }
+.frs-addon-key-input {
+    font-family:monospace;font-size:12px;
+    border:1px solid #ddd;border-radius:4px;
+    padding:4px 7px;color:#555;background:#f9fafb;
+}
+.frs-addon-key-input:focus { border-color:#2271b1;outline:none;background:#fff; }
